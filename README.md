@@ -66,7 +66,6 @@ hashhunt/
    ```bash
    git clone https://github.com/khushii-05/hashhunt.git
    cd hashhunt
-````
 
 2. **Install dependencies:**
 
