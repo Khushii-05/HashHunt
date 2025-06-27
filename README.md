@@ -1,7 +1,3 @@
-
-## ✅ Cleaned Up `README.md`
-
-```markdown
 # 🔐 HashHunt
 
 **HashHunt** is a beginner-friendly password hash cracker built to demonstrate how dictionary attacks work. It allows you to crack hashed passwords, analyze password strength, and test password guessability using a wordlist. Designed for students, developers, and cybersecurity learners.
@@ -121,4 +117,4 @@ Feel free to fork, improve, and learn from it!
 
 ```
 
----
+
