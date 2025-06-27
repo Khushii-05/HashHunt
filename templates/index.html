@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HashHunt - Password Hash Cracker</title>
+    <link rel="stylesheet" href="static/styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="floating-icons">
+        <i class="fas fa-lock floating-icon" style="top: 10%; left: 10%; font-size: 2rem; animation-delay: 0s;"></i>
+        <i class="fas fa-key floating-icon" style="top: 20%; right: 15%; font-size: 1.5rem; animation-delay: 1s;"></i>
+        <i class="fas fa-shield-alt floating-icon" style="top: 60%; left: 5%; font-size: 2.5rem; animation-delay: 2s;"></i>
+        <i class="fas fa-hashtag floating-icon" style="bottom: 20%; right: 10%; font-size: 2rem; animation-delay: 3s;"></i>
+        <i class="fas fa-code floating-icon" style="bottom: 10%; left: 20%; font-size: 1.8rem; animation-delay: 4s;"></i>
+    </div>
+
+    <div class="container">
+        <div class="about-dropdown">
+            <button class="about-btn" onclick="toggleAbout()">
+                <i class="fas fa-info-circle"></i> About
+            </button>
+            <div class="about-content" id="aboutContent">
+                <h3 style="color: #4ecdc4; margin-bottom: 15px;">
+                    <i class="fas fa-search"></i> HashHunt
+                </h3>
+                <p style="margin-bottom: 15px; line-height: 1.6;">
+                    HashHunt is a learning-focused password hash cracker built for students, developers, and cybersecurity beginners.It demonstrates how dictionary-based attacks work, evaluates password strength, and helps users understand how weak or common passwords can be compromised.
+                </p>
+                <h4 style="color: #ff6b6b; margin-bottom: 10px;">Features:</h4>
+                <ul style="margin-bottom: 15px; padding-left: 20px; line-height: 1.6;">
+                    <li>Crack hashes using a wordlist (dictionary attack)</li>
+                    <li>Multi algorithm support</li>
+                    <li>Check if a password is easily guessable</li>
+                    <li>Analyze password strength based on complexity</li>
+                    <li>Available as both CLI and Web app</li>
+                </ul>
+                <h4 style="color: #ff6b6b; margin-bottom: 10px;">Supported Algorithms:</h4>
+                <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+                    <span style="background: rgba(78, 205, 196, 0.2); padding: 5px 10px; border-radius: 15px; font-size: 0.8rem;">SHA256</span>
+                    <span style="background: rgba(255, 107, 107, 0.2); padding: 5px 10px; border-radius: 15px; font-size: 0.8rem;">MD5</span>
+                    <span style="background: rgba(69, 183, 209, 0.2); padding: 5px 10px; border-radius: 15px; font-size: 0.8rem;">SHA1</span>
+                </div>
+                <p style="font-size: 0.9rem; color: #888; font-style: italic;">
+                    <i class="fas fa-exclamation-triangle"></i> 
+                    HashHunt is intended for educational and ethical use only. Please do not use it against real systems without permission.
+                </p>
+            </div>
+        </div>
+
+        <header>
+            <h1 class="logo">
+                <i class="fas fa-search"></i> HashHunt
+            </h1>
+            <p class="subtitle">Password Hash Cracking & Security Analysis</p>
+        </header>
+
+        <div class="nav-buttons">
+            <button class="nav-btn active" id="crack-nav-btn" onclick="switchMode('crack')">
+                <i class="fas fa-hammer"></i> Crack Hash
+            </button>
+            <button class="nav-btn" id="check-nav-btn" onclick="switchMode('check')">
+                <i class="fas fa-shield-check"></i> Check Password
+            </button>
+        </div>
+
+        <div class="main-content">
+            <!-- Hash Cracking Section -->
+            <div class="form-section active" id="crack-section">
+                <form id="crack-form">
+                    <!-- Input Type Selection -->
+                    <div class="form-group">
+                        <label>
+                            <i class="fas fa-toggle-on"></i> Input Type
+                        </label>
+                        <div class="input-type-buttons">
+                            <button type="button" class="input-type-btn active" 
+                                onclick="switchInputType('hash')" id="hash-btn">
+                                <i class="fas fa-hashtag"></i> Paste Hash
+                            </button>
+                            <button type="button" class="input-type-btn" 
+                                onclick="switchInputType('password')" id="password-btn">
+                                <i class="fas fa-key"></i> Type Password
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Hash Input -->
+                    <div class="form-group" id="hash-input-group">
+                        <label for="target_hash">
+                            <i class="fas fa-hashtag"></i> Target Hash
+                        </label>
+                        <textarea name="target_hash" id="target_hash" rows="3" 
+                                placeholder="Enter the hash you want to crack (e.g., 5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8)"></textarea>
+                    </div>
+
+                    <!-- Password Input -->
+                    <div class="form-group" id="password-input-group" style="display: none;">
+                        <label for="target_password">
+                            <i class="fas fa-key"></i> Password to Test
+                        </label>
+                        <input type="password" name="target_password" id="target_password" 
+                               placeholder="Enter password to check if it's easily guessable">
+                        <button type="button" class="toggle-password" onclick="togglePasswordVisibility('target_password')">
+                            <i class="fas fa-eye" id="target_password_icon"></i>
+                        </button>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="algo_crack">
+                            <i class="fas fa-cog"></i> Hashing Algorithm
+                        </label>
+                        <select name="algo" id="algo_crack" required>
+                            <option value="sha256">SHA256</option>
+                            <option value="md5">MD5</option>
+                            <option value="sha1">SHA1</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="submit-btn">
+                        <i class="fas fa-play"></i> Start Cracking
+                    </button>
+                </form>
+            </div>
+
+            <!-- Password Checking Section -->
+            <div class="form-section" id="check-section">
+                <form id="check-form">
+                    <div class="form-group">
+                        <label for="password_check">
+                            <i class="fas fa-key"></i> Password to Check
+                        </label>
+                        <input type="password" name="password" id="password_check" 
+                               placeholder="Enter your password" required>
+                        <button type="button" class="toggle-password" onclick="togglePasswordVisibility('password_check')">
+                            <i class="fas fa-eye" id="password_check_icon"></i>
+                        </button>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="algo_check">
+                            <i class="fas fa-cog"></i> Hashing Algorithm
+                        </label>
+                        <select name="algo" id="algo_check" required>
+                            <option value="sha256">SHA256</option>
+                            <option value="md5">MD5</option>
+                            <option value="sha1">SHA1</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="submit-btn">
+                        <i class="fas fa-search"></i> Analyze Password
+                    </button>
+                </form>
+            </div>
+
+            <!-- Results Section -->
+            <div id="results-section" style="display: none;"></div>
+
+            <!-- Loading Section -->
+            <div id="loading-section" style="display: none; text-align: center; padding: 20px;">
+                <i class="fas fa-spinner fa-spin" style="font-size: 2rem; color: #4ecdc4;"></i>
+                <p style="margin-top: 10px;">Processing...</p>
+            </div>
+        </div>
+    </div>
+
+<script>
+    let currentInputType = 'hash';
+
+    // Initialize page
+    document.addEventListener('DOMContentLoaded', function() {
+        // Set initial state
+        switchMode('crack');
+        
+        // Add floating animation to icons with random delays
+        const floatingIcons = document.querySelectorAll('.floating-icon');
+        floatingIcons.forEach((icon, index) => {
+            icon.style.animationDelay = Math.random() * 5 + 's';
+        });
+
+        // Add typing effect to subtitle
+        const subtitle = document.querySelector('.subtitle');
+        const text = subtitle.textContent;
+        subtitle.textContent = '';
+        
+        let i = 0;
+        function typeWriter() {
+            if (i < text.length) {
+                subtitle.textContent += text.charAt(i);
+                i++;
+                setTimeout(typeWriter, 50);
+            }
+        }
+        
+        setTimeout(typeWriter, 1000);
+
+        // Add form event listeners
+        document.getElementById('crack-form').addEventListener('submit', handleCrackSubmit);
+        document.getElementById('check-form').addEventListener('submit', handleCheckSubmit);
+    });
+
+    function switchMode(mode) {
+        console.log('Switching to mode:', mode);
+        
+        // Hide all sections
+        document.getElementById('crack-section').classList.remove('active');
+        document.getElementById('check-section').classList.remove('active');
+        document.getElementById('results-section').style.display = 'none';
+        
+        // Show the selected section
+        document.getElementById(mode + '-section').classList.add('active');
+        
+        // Update navigation buttons
+        document.getElementById('crack-nav-btn').classList.remove('active');
+        document.getElementById('check-nav-btn').classList.remove('active');
+        document.getElementById(mode + '-nav-btn').classList.add('active');
+        
+        // Reset forms
+        document.getElementById('crack-form').reset();
+        document.getElementById('check-form').reset();
+        
+        // Reset input type for crack mode
+        if(mode === 'crack') {
+            switchInputType('hash');
+        }
+    }
+
+    function switchInputType(type) {
+        console.log('Switching input type to:', type);
+        currentInputType = type;
+        
+        // Update input type buttons
+        document.getElementById('hash-btn').classList.remove('active');
+        document.getElementById('password-btn').classList.remove('active');
+        document.getElementById(type + '-btn').classList.add('active');
+
+        // Show/hide appropriate input groups
+        const hashGroup = document.getElementById('hash-input-group');
+        const passwordGroup = document.getElementById('password-input-group');
+        const targetHash = document.getElementById('target_hash');
+        const targetPassword = document.getElementById('target_password');
+
+        if (type === 'hash') {
+            hashGroup.style.display = 'block';
+            passwordGroup.style.display = 'none';
+            targetHash.required = true;
+            targetPassword.required = false;
+            targetPassword.value = '';
+        } else {
+            hashGroup.style.display = 'none';
+            passwordGroup.style.display = 'block';
+            targetHash.required = false;
+            targetPassword.required = true;
+            targetHash.value = '';
+        }
+    }
+
+    function togglePasswordVisibility(inputId) {
+        const input = document.getElementById(inputId);
+        const icon = document.getElementById(inputId + '_icon');
+        
+        if (input.type === 'password') {
+            input.type = 'text';
+            icon.className = 'fas fa-eye-slash';
+        } else {
+            input.type = 'password';
+            icon.className = 'fas fa-eye';
+        }
+    }
+
+    function toggleAbout() {
+        const aboutContent = document.getElementById('aboutContent');
+        aboutContent.classList.toggle('show');
+    }
+
+    // Close about dropdown when clicking outside
+    document.addEventListener('click', function(event) {
+        const aboutDropdown = document.querySelector('.about-dropdown');
+        const aboutContent = document.getElementById('aboutContent');
+        
+        if (!aboutDropdown.contains(event.target)) {
+            aboutContent.classList.remove('show');
+        }
+    });
+
+    async function handleCrackSubmit(e) {
+        e.preventDefault();
+        
+        const formData = new FormData(e.target);
+        const data = {
+            algo: formData.get('algo'),
+            input_type: currentInputType
+        };
+
+        if (currentInputType === 'hash') {
+            data.target_hash = formData.get('target_hash');
+            if (!data.target_hash || !data.target_hash.trim()) {
+                alert('Please enter a hash to crack');
+                return;
+            }
+        } else {
+            data.target_password = formData.get('target_password');
+            if (!data.target_password || !data.target_password.trim()) {
+                alert('Please enter a password to test');
+                return;
+            }
+        }
+
+        showLoading();
+        
+        try {
+            const response = await fetch('/crack', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            });
+
+            const result = await response.json();
+            hideLoading();
+            displayResults(result);
+        } catch (error) {
+            hideLoading();
+            displayError('Failed to process request: ' + error.message);
+        }
+    }
+
+    async function handleCheckSubmit(e) {
+        e.preventDefault();
+        
+        const formData = new FormData(e.target);
+        const data = {
+            password: formData.get('password'),
+            algo: formData.get('algo')
+        };
+
+        if (!data.password || !data.password.trim()) {
+            alert('Please enter a password to check');
+            return;
+        }
+
+        showLoading();
+        
+        try {
+            const response = await fetch('/check', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            });
+
+            const result = await response.json();
+            hideLoading();
+            displayResults(result);
+        } catch (error) {
+            hideLoading();
+            displayError('Failed to process request: ' + error.message);
+        }
+    }
+
+    function showLoading() {
+        document.getElementById('loading-section').style.display = 'block';
+        document.getElementById('results-section').style.display = 'none';
+    }
+
+    function hideLoading() {
+        document.getElementById('loading-section').style.display = 'none';
+    }
+
+    function displayResults(result) {
+        const resultsSection = document.getElementById('results-section');
+        
+        if (!result.success) {
+            displayError(result.error || 'Unknown error occurred');
+            return;
+        }
+
+        let html = '';
+        let sectionClass = 'success';
+
+        if (result.mode === 'crack') {
+            if (result.found) {
+                sectionClass = 'success';
+            } else {
+                sectionClass = 'warning';
+            }
+
+            html = `
+                <h3><i class="fas fa-hammer"></i> Hash Cracking Results</h3>
+                <p><strong>🔑 Input:</strong> 
+                    ${result.input_type === 'hash' ? 'Hash provided' : 'Password provided (' + result.algorithm + ' hash generated)'}
+                </p>
+                <p><strong>📝 ${result.input_type === 'hash' ? 'Target Hash' : 'Generated Hash'}:</strong> 
+                    <code>${result.hash}</code></p>
+                
+                ${result.found ? `
+                    <p><strong>✅ Password Found:</strong> <code>${result.found}</code></p>
+                    <p><strong>⚠️ Security Warning:</strong> <span style="color: #e74c3c;">This password is easily guessable!</span></p>
+                ` : `
+                    <p><strong>❌ Password Not Found</strong> in the wordlist</p>
+                    <p><strong>✅ Security Assessment:</strong> <span style="color: #2ecc71;">
+                        This password is not in common wordlists - better security!</span></p>
+                `}
+                
+                <p><strong>⏱️ Time Taken:</strong> ${result.time} seconds</p>
+                <p><strong>🔧 Algorithm Used:</strong> ${result.algorithm}</p>
+            `;
+        } else if (result.mode === 'check') {
+            sectionClass = result.guessable ? 'error' : 'success';
+            
+            html = `
+                <h3><i class="fas fa-shield-check"></i> Password Strength Results</h3>
+                <p><strong>📊 Strength:</strong> ${result.strength}</p>
+                <p><strong>🎯 Guessable:</strong> 
+                    ${result.guessable ? 'Yes (found in wordlist)' : 'No (not found in wordlist)'}</p>
+                <p><strong>🔑 Password Hash:</strong> <code>${result.password_hash}</code></p>
+                <p><strong>🔧 Algorithm Used:</strong> ${result.algorithm}</p>
+            `;
+        }
+
+        resultsSection.className = `result-section ${sectionClass}`;
+        resultsSection.innerHTML = html + `
+            <div style="text-align: center; margin-top: 20px;">
+                <button onclick="clearResults()" class="submit-btn" style="width: auto; display: inline-block;">
+                    <i class="fas fa-times"></i> Clear Results
+                </button>
+            </div>
+        `;
+        
+        resultsSection.style.display = 'block';
+    }
+
+    function displayError(errorMessage) {
+        const resultsSection = document.getElementById('results-section');
+        resultsSection.className = 'result-section error';
+        resultsSection.innerHTML = `
+            <h3><i class="fas fa-exclamation-triangle"></i> Error</h3>
+            <p><strong>❌ Error occurred:</strong> ${errorMessage}</p>
+            <div style="text-align: center; margin-top: 20px;">
+                <button onclick="clearResults()" class="submit-btn" style="width: auto; display: inline-block;">
+                    <i class="fas fa-times"></i> Clear Results
+                </button>
+            </div>
+        `;
+        resultsSection.style.display = 'block';
+    }
+
+    function clearResults() {
+        document.getElementById('results-section').style.display = 'none';
+    }
+</script>
+</body>
+</html>
