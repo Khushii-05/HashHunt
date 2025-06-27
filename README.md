@@ -1,4 +1,7 @@
 
+## ✅ Cleaned Up `README.md`
+
+```markdown
 # 🔐 HashHunt
 
 **HashHunt** is a beginner-friendly password hash cracker built to demonstrate how dictionary attacks work. It allows you to crack hashed passwords, analyze password strength, and test password guessability using a wordlist. Designed for students, developers, and cybersecurity learners.
@@ -9,30 +12,31 @@
 
 ## 🚀 Features
 
-- 🔍 Crack hashed passwords using a dictionary attack
-- 🧪 Analyze password strength (length, complexity, and guessability)
-- 🧰 Multi-algorithm support: `SHA256`, `MD5`, `SHA1`
-- 🖥️ CLI and Web UI (Flask-based)
-- 🧠 Real-time feedback with password testing
+- 🔍 Crack hashed passwords using a dictionary attack  
+- 🧪 Analyze password strength (length, complexity, and guessability)  
+- 🧰 Multi-algorithm support: `SHA256`, `MD5`, `SHA1`  
+- 🖥️ CLI and Web UI (Flask-based)  
+- 🧠 Real-time feedback with password testing  
 - 🌐 Responsive web UI with floating icons and dynamic forms
 
 ---
 
 ## 🖼️ Demo
-![alt text](image-1.png)
-![alt text](image.png)
-![alt text](image-2.png)
+
+![alt text](image-1.png)  
+![alt text](image.png)  
+![alt text](image-2.png)  
 ![alt text](image-3.png)
 
 ---
 
 ## 🧱 Tech Stack
 
-- Python 3
-- Flask
-- HTML, CSS (custom + FontAwesome)
-- JavaScript (for dynamic behavior)
-- tqdm (for CLI progress bar)
+- Python 3  
+- Flask  
+- HTML, CSS (custom + FontAwesome)  
+- JavaScript (for dynamic behavior)  
+- tqdm (for CLI progress bar)  
 - Gunicorn (for production-ready server)
 
 ---
@@ -62,6 +66,7 @@ hashhunt/
 ### 🔧 Local Setup (for educational/testing purposes)
 
 1. **Clone this repo:**
+
    ```bash
    git clone https://github.com/khushii-05/hashhunt.git
    cd hashhunt
@@ -111,6 +116,9 @@ but please refrain from cloning and deploying it directly as a public tool.
 
 ## 🧠 Credits
 
-Built by \[Khushi Tiwari] as a learning project.
+Built by **Khushi Tiwari** as a learning project.
 Feel free to fork, improve, and learn from it!
 
+```
+
+---
