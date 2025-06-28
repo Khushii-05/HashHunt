@@ -400,7 +400,7 @@ input:focus, select:focus, textarea:focus {
     position: absolute;
     top: 20px;
     /* Removed right positioning */
-    z-index: 1001; /* Ensure it stays above other elements */
+     /* Ensure it stays above other elements */
 }
     
     .about-content { 
