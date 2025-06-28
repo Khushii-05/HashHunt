@@ -297,68 +297,129 @@ input:focus, select:focus, textarea:focus {
 .strength-strong { background: #2ecc71; width: 80%; }
 .strength-very-strong { background: #27ae60; width: 100%; }
 
-@media (max-width: 768px) {
-    .container { padding: 10px; }
-    .logo { font-size: 2.5rem; }
-    .nav-buttons { flex-direction: column; align-items: center; }
-    .about-dropdown { position: static; margin-bottom: 20px; }
-    .about-content { position: static; width: 100%; }
+.input-type-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 8px;
 }
 
- .input-type-buttons {
-            display: flex;
-            gap: 10px;
-            margin-top: 8px;
-        }
+.input-type-btn {
+    flex: 1;
+    padding: 10px 15px;
+    border: 2px solid #4ecdc4;
+    background: transparent;
+    color: #4ecdc4;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
 
+.input-type-btn:hover {
+    background: rgba(78, 205, 196, 0.1);
+    transform: translateY(-2px);
+}
+
+.input-type-btn.active {
+    background: #4ecdc4;
+    color: #1a1a1a;
+    box-shadow: 0 4px 15px rgba(78, 205, 196, 0.3);
+}
+
+.toggle-password {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #888;
+    cursor: pointer;
+    padding: 5px;
+    transition: color 0.3s ease;
+}
+
+.toggle-password:hover {
+    color: #4ecdc4;
+}
+
+.form-group {
+    position: relative;
+}
+
+.form-group input[type="password"] {
+    padding-right: 50px;
+}
+
+/* Mobile Responsive Design */
+@media (max-width: 768px) {
+    .container { 
+        padding: 10px; 
+    }
+    
+    .logo { 
+        font-size: 2.5rem; 
+    }
+    
+    .nav-buttons { 
+        flex-direction: column; 
+        align-items: center; 
+    }
+    
+    /* Mobile About Section Fix */
+    .about-dropdown { 
+        position: relative;
+        top: auto;
+        right: auto;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+    
+    .about-content { 
+        position: relative;
+        top: auto;
+        right: auto;
+        width: 100%;
+        margin-top: 15px;
+        transform: none;
+        opacity: 0;
+        visibility: hidden;
+        max-height: 0;
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
+    
+    .about-content.show {
+        transform: none;
+        opacity: 1;
+        visibility: visible;
+        max-height: 500px;
+        margin-bottom: 20px;
+    }
+    
+    /* Adjust main content padding on mobile */
+    .main-content {
+        padding: 20px;
+        margin-top: 0;
+    }
+    
+    /* Ensure proper spacing when about is open */
+    header {
+        margin-bottom: 20px;
+    }
+    
+    /* Make input type buttons stack on very small screens */
+    @media (max-width: 480px) {
+        .input-type-buttons {
+            flex-direction: column;
+        }
+        
         .input-type-btn {
-            flex: 1;
-            padding: 10px 15px;
-            border: 2px solid #4ecdc4;
-            background: transparent;
-            color: #4ecdc4;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
+            width: 100%;
         }
-
-        .input-type-btn:hover {
-            background: rgba(78, 205, 196, 0.1);
-            transform: translateY(-2px);
-        }
-
-        .input-type-btn.active {
-            background: #4ecdc4;
-            color: #1a1a1a;
-            box-shadow: 0 4px 15px rgba(78, 205, 196, 0.3);
-        }
-
-        .toggle-password {
-            position: absolute;
-            right: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: none;
-            border: none;
-            color: #888;
-            cursor: pointer;
-            padding: 5px;
-            transition: color 0.3s ease;
-        }
-
-        .toggle-password:hover {
-            color: #4ecdc4;
-        }
-
-        .form-group {
-            position: relative;
-        }
-
-        .form-group input[type="password"] {
-            padding-right: 50px;
-        }
+    }
+}
