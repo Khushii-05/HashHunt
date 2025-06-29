@@ -395,9 +395,8 @@ input:focus, select:focus, textarea:focus {
         align-items: center; 
     }
     
-    /* Mobile About Section Fix */
-    .about-dropdown {
-        position: relative;
+ .about-dropdown {
+        position: absolute;
         top: auto;
         right: auto;
         margin-bottom: 20px;
