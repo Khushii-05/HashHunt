@@ -305,6 +305,10 @@ input:focus, select:focus, textarea:focus {
     border-radius: 15px;
     border-left: 4px solid #4ecdc4;
     animation: slideIn 0.5s ease;
+    /* Fix overflow for long text like hashes */
+    word-wrap: break-word;
+    word-break: break-all;
+    overflow-wrap: break-word;
 }
 
 @keyframes slideIn {
@@ -333,6 +337,21 @@ input:focus, select:focus, textarea:focus {
 .result-section p {
     margin-bottom: 10px;
     line-height: 1.6;
+}
+
+/* Hash display fix - make long hashes wrap properly */
+.result-section code {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+    display: inline-block;
+    word-break: break-all;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
+    line-height: 1.4;
 }
 
 .floating-icons {
@@ -465,6 +484,7 @@ input:focus, select:focus, textarea:focus {
 @media (max-width: 768px) {
     .container { 
         padding: 15px; 
+        position: relative;
     }
     
     .logo { 
@@ -484,6 +504,7 @@ input:focus, select:focus, textarea:focus {
         font-size: 1.1rem;
     }
     
+    /* FIXED: About dropdown positioning for mobile */
     .about-dropdown {
         position: fixed;
         top: 15px;
@@ -491,17 +512,20 @@ input:focus, select:focus, textarea:focus {
         z-index: 1001;
     }
     
+    /* FIXED: About content positioning and sizing for mobile */
     .about-content { 
         position: fixed;
-        top: 70px;
-        right: 15px;
-        left: 15px;
+        top: 60px;
+        left: 10px;
+        right: 10px;
         width: auto;
         max-width: none;
         margin-top: 0;
         transform: translateY(-20px);
         max-height: 60vh;
         overflow-y: auto;
+        /* Ensure it doesn't go off screen */
+        box-sizing: border-box;
     }
     
     .about-content.show {
@@ -517,6 +541,8 @@ input:focus, select:focus, textarea:focus {
     
     header {
         margin-bottom: 30px;
+        /* Add padding to avoid overlap with about button */
+        padding-top: 20px;
     }
     
     .input-type-buttons {
@@ -548,6 +574,35 @@ input:focus, select:focus, textarea:focus {
         right: 10px;
         padding: 10px;
     }
+    
+    /* FIXED: Hash text overflow on mobile */
+    .result-section {
+        padding: 15px;
+        /* Ensure proper text wrapping */
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+        word-break: break-word;
+    }
+    
+    /* FIXED: Better hash display on mobile */
+    .result-section code {
+        font-size: 0.8rem;
+        padding: 6px 8px;
+        line-height: 1.3;
+        display: block;
+        margin: 5px 0;
+        /* Force text to break properly */
+        white-space: pre-wrap;
+        word-break: break-all;
+        overflow-wrap: break-word;
+    }
+    
+    .result-section p {
+        margin-bottom: 12px;
+        /* Better spacing for mobile */
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
 }
 
 /* Very small screens */
@@ -564,11 +619,13 @@ input:focus, select:focus, textarea:focus {
         font-size: 2rem;
     }
     
+    /* FIXED: About content for very small screens */
     .about-content {
-        top: 60px;
-        right: 10px;
-        left: 10px;
+        top: 55px;
+        left: 5px;
+        right: 5px;
         padding: 15px;
+        max-height: 50vh;
     }
     
     /* Ensure all buttons are easily tappable */
@@ -581,6 +638,20 @@ input:focus, select:focus, textarea:focus {
     /* Better spacing for small screens */
     .form-group {
         margin-bottom: 18px;
+    }
+    
+    /* FIXED: Even smaller hash text for very small screens */
+    .result-section code {
+        font-size: 0.75rem;
+        padding: 4px 6px;
+    }
+    
+    .result-section {
+        padding: 12px;
+    }
+    
+    header {
+        padding-top: 15px;
     }
 }
 
@@ -611,5 +682,35 @@ input:focus, select:focus, textarea:focus {
     .toggle-password {
         min-height: 44px;
         min-width: 44px;
+    }
+}
+
+/* Additional fixes for hash text overflow */
+.hash-text {
+    word-break: break-all;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
+}
+
+/* Ensure all long text content wraps properly */
+.result-section strong,
+.result-section span {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+/* Fix for landscape mobile orientation */
+@media (max-width: 768px) and (orientation: landscape) {
+    .about-content {
+        max-height: 40vh;
+    }
+    
+    .main-content {
+        padding: 20px;
+    }
+    
+    .logo {
+        font-size: 2.2rem;
     }
 }
