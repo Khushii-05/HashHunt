@@ -10,6 +10,8 @@ body {
     color: #ffffff;
     min-height: 100vh;
     overflow-x: hidden;
+    /* Fix for mobile touch scrolling */
+    -webkit-overflow-scrolling: touch;
 }
 
 .container {
@@ -64,13 +66,29 @@ header {
     transition: all 0.3s ease;
     font-size: 1rem;
     backdrop-filter: blur(10px);
+    /* Mobile touch improvements */
+    min-height: 44px;
+    min-width: 44px;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    -webkit-user-select: none;
 }
 
-.nav-btn:hover {
-    background: rgba(255, 255, 255, 0.2);
-    border-color: #4ecdc4;
-    transform: translateY(-2px);
-    box-shadow: 0 10px 20px rgba(78, 205, 196, 0.3);
+/* Better mobile hover states */
+@media (hover: hover) and (pointer: fine) {
+    .nav-btn:hover {
+        background: rgba(255, 255, 255, 0.2);
+        border-color: #4ecdc4;
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(78, 205, 196, 0.3);
+    }
+}
+
+/* Touch-friendly active states */
+.nav-btn:active {
+    transform: scale(0.95);
+    background: rgba(255, 255, 255, 0.3);
 }
 
 .nav-btn.active {
@@ -83,6 +101,7 @@ header {
     position: absolute;
     top: 20px;
     right: 20px;
+    z-index: 1001;
 }
 
 .about-btn {
@@ -94,11 +113,25 @@ header {
     cursor: pointer;
     backdrop-filter: blur(10px);
     transition: all 0.3s ease;
+    /* Mobile touch improvements */
+    min-height: 44px;
+    min-width: 44px;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    -webkit-user-select: none;
 }
 
-.about-btn:hover {
-    background: rgba(255, 255, 255, 0.2);
-    transform: scale(1.05);
+@media (hover: hover) and (pointer: fine) {
+    .about-btn:hover {
+        background: rgba(255, 255, 255, 0.2);
+        transform: scale(1.05);
+    }
+}
+
+.about-btn:active {
+    transform: scale(0.95);
+    background: rgba(255, 255, 255, 0.3);
 }
 
 .about-content {
@@ -116,6 +149,10 @@ header {
     visibility: hidden;
     transition: all 0.3s ease;
     z-index: 1000;
+    /* Mobile scrolling fix */
+    max-height: 70vh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 .about-content.show {
@@ -174,6 +211,7 @@ header {
 
 .form-group {
     margin-bottom: 25px;
+    position: relative;
 }
 
 label {
@@ -192,6 +230,21 @@ input, select, textarea {
     color: white;
     font-size: 1rem;
     transition: all 0.3s ease;
+    /* Mobile improvements */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Better dropdown styling */
+select {
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    background-size: 16px;
+    padding-right: 45px;
 }
 
 /* Fix for dropdown options color */
@@ -204,17 +257,6 @@ select option {
 select:focus option {
     background: #16213e;
     color: white;
-}
-
-/* Additional styling for better dropdown visibility */
-select {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
-    background-repeat: no-repeat;
-    background-position: right 15px center;
-    background-size: 16px;
 }
 
 input:focus, select:focus, textarea:focus {
@@ -236,11 +278,24 @@ input:focus, select:focus, textarea:focus {
     transition: all 0.3s ease;
     width: 100%;
     margin-top: 20px;
+    /* Mobile touch improvements */
+    min-height: 50px;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    -webkit-user-select: none;
 }
 
-.submit-btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 15px 30px rgba(78, 205, 196, 0.4);
+@media (hover: hover) and (pointer: fine) {
+    .submit-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 30px rgba(78, 205, 196, 0.4);
+    }
+}
+
+.submit-btn:active {
+    transform: scale(0.95);
+    box-shadow: 0 5px 15px rgba(78, 205, 196, 0.3);
 }
 
 .result-section {
@@ -330,7 +385,7 @@ input:focus, select:focus, textarea:focus {
 
 .input-type-btn {
     flex: 1;
-    padding: 10px 15px;
+    padding: 12px 15px;
     border: 2px solid #4ecdc4;
     background: transparent;
     color: #4ecdc4;
@@ -342,11 +397,24 @@ input:focus, select:focus, textarea:focus {
     align-items: center;
     justify-content: center;
     gap: 8px;
+    /* Mobile touch improvements */
+    min-height: 44px;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    -webkit-user-select: none;
 }
 
-.input-type-btn:hover {
-    background: rgba(78, 205, 196, 0.1);
-    transform: translateY(-2px);
+@media (hover: hover) and (pointer: fine) {
+    .input-type-btn:hover {
+        background: rgba(78, 205, 196, 0.1);
+        transform: translateY(-2px);
+    }
+}
+
+.input-type-btn:active {
+    transform: scale(0.95);
+    background: rgba(78, 205, 196, 0.2);
 }
 
 .input-type-btn.active {
@@ -364,26 +432,39 @@ input:focus, select:focus, textarea:focus {
     border: none;
     color: #888;
     cursor: pointer;
-    padding: 5px;
+    padding: 8px;
     transition: color 0.3s ease;
+    /* Mobile touch improvements */
+    min-height: 40px;
+    min-width: 40px;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    -webkit-user-select: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.toggle-password:hover {
+@media (hover: hover) and (pointer: fine) {
+    .toggle-password:hover {
+        color: #4ecdc4;
+    }
+}
+
+.toggle-password:active {
     color: #4ecdc4;
-}
-
-.form-group {
-    position: relative;
+    transform: translateY(-50%) scale(0.9);
 }
 
 .form-group input[type="password"] {
-    padding-right: 50px;
+    padding-right: 55px;
 }
 
 /* Mobile Responsive Design */
 @media (max-width: 768px) {
     .container { 
-        padding: 10px; 
+        padding: 15px; 
     }
     
     .logo { 
@@ -392,59 +473,143 @@ input:focus, select:focus, textarea:focus {
     
     .nav-buttons { 
         flex-direction: column; 
-        align-items: center; 
+        align-items: center;
+        gap: 15px;
     }
     
-.about-dropdown {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    z-index: 1001;
-}
-
+    .nav-btn {
+        width: 100%;
+        max-width: 300px;
+        padding: 15px 30px;
+        font-size: 1.1rem;
+    }
+    
+    .about-dropdown {
+        position: fixed;
+        top: 15px;
+        right: 15px;
+        z-index: 1001;
+    }
     
     .about-content { 
-        position: relative;
-        top: auto;
-        width: 100%;
-        margin-top: 15px;
-        transform: none;
-        opacity: 0;
-        visibility: hidden;
-        max-height: 0;
-        overflow: hidden;
-        transition: all 0.3s ease;
-        max-height: 60vh; /* Limit height */
-        overflow-y: auto; /* Enable scrolling */
+        position: fixed;
+        top: 70px;
+        right: 15px;
+        left: 15px;
+        width: auto;
+        max-width: none;
+        margin-top: 0;
+        transform: translateY(-20px);
+        max-height: 60vh;
+        overflow-y: auto;
     }
     
     .about-content.show {
-        transform: none;
+        transform: translateY(0);
         opacity: 1;
         visibility: visible;
-        max-height: 500px;
-        margin-bottom: 20px;
     }
     
-    /* Adjust main content padding on mobile */
     .main-content {
-        padding: 20px;
+        padding: 25px;
         margin-top: 0;
     }
     
-    /* Ensure proper spacing when about is open */
     header {
+        margin-bottom: 30px;
+    }
+    
+    .input-type-buttons {
+        flex-direction: column;
+        gap: 12px;
+    }
+    
+    .input-type-btn {
+        width: 100%;
+        padding: 15px;
+        font-size: 1rem;
+    }
+    
+    /* Better form spacing on mobile */
+    .form-group {
         margin-bottom: 20px;
     }
     
-    /* Make input type buttons stack on very small screens */
-    @media (max-width: 480px) {
-        .input-type-buttons {
-            flex-direction: column;
-        }
-        
-        .input-type-btn {
-            width: 100%;
-        }
+    input, select, textarea {
+        padding: 18px 15px;
+        font-size: 16px; /* Prevents zoom on iOS */
+    }
+    
+    .form-group input[type="password"] {
+        padding-right: 60px;
+    }
+    
+    .toggle-password {
+        right: 10px;
+        padding: 10px;
+    }
+}
+
+/* Very small screens */
+@media (max-width: 480px) {
+    .container {
+        padding: 10px;
+    }
+    
+    .main-content {
+        padding: 20px;
+    }
+    
+    .logo {
+        font-size: 2rem;
+    }
+    
+    .about-content {
+        top: 60px;
+        right: 10px;
+        left: 10px;
+        padding: 15px;
+    }
+    
+    /* Ensure all buttons are easily tappable */
+    .nav-btn,
+    .input-type-btn,
+    .submit-btn {
+        min-height: 48px;
+    }
+    
+    /* Better spacing for small screens */
+    .form-group {
+        margin-bottom: 18px;
+    }
+}
+
+/* Fix for iOS Safari specific issues */
+@supports (-webkit-touch-callout: none) {
+    input, select, textarea {
+        -webkit-appearance: none;
+        border-radius: 10px;
+    }
+    
+    /* Fix for iOS zoom on input focus */
+    input[type="text"],
+    input[type="password"],
+    select,
+    textarea {
+        font-size: 16px;
+    }
+}
+
+/* Improve touch targets for accessibility */
+@media (max-width: 768px) {
+    button, 
+    input[type="button"], 
+    input[type="submit"], 
+    .nav-btn, 
+    .input-type-btn,
+    .about-btn,
+    .toggle-password {
+        min-height: 44px;
+        min-width: 44px;
     }
 }
