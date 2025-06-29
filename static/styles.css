@@ -406,7 +406,7 @@ input:focus, select:focus, textarea:focus {
     .about-content { 
         position: relative;
         top: auto;
-        right: auto;
+        
         width: 100%;
         margin-top: 15px;
         transform: none;
